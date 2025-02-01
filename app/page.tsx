@@ -5,7 +5,6 @@ import { useState } from "react";
 import WalletInput from "./components/WalletInput";
 import KilnApyCalculator from "./components/KilnApyCalculator"; // Nouveau composant
 import Slider from "./components/Slider";
-import DatePicker from "./components/DatePicker";
 import Chart from "./components/Chart";
 
 export default function Home() {
@@ -15,7 +14,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
 
   // State pour la deuxième recherche (ETH Rewards)
-  const [date, setDate] = useState("2025-01-28");
+  const [date, setDate] = useState("");
   const [ethAmount, setEthAmount] = useState(1);
   const [kilnData, setKilnData] = useState<{ date: string; gross_apy: number }[]>([]);
   const [networkData, setNetworkData] = useState<{ date: string; gross_apy: number }[]>([]);
@@ -129,35 +128,40 @@ export default function Home() {
       <div className="container mx-auto">
         <h1 className="text-3xl font-bold mb-6 text-center">Find the best place to stake your ETH</h1>
 
-        {/* Première section : APY moyen du wallet */}
-        <div className="bg-gray-900 p-6 rounded-lg shadow-lg w-full max-w-md mb-8">
-          <h2 className="text-2xl font-semibold mb-4 text-center">Your Validator Average APY</h2>
-          <WalletInput onSearch={handleSearchApy} />
-          {loading && <p className="mt-4">Loading...</p>}
-          {error && <p className="mt-4 text-red-500">{error}</p>}
-          {averageGrossApy !== null && (
-            <div className="mt-6">
-              <p className="text-xl text-center">{averageGrossApy.toFixed(4)}%</p>
-            </div>
-          )}
-        </div>
+        {/* Section du dashboard avec les APY côte à côte */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          {/* Première section : APY moyen du wallet */}
+          <div className="bg-gray-900 p-6 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-semibold mb-4 text-center">Your Validator Average APY</h2>
+            <WalletInput onSearch={handleSearchApy} />
+            {loading && <p className="mt-4">Loading...</p>}
+            {error && <p className="mt-4 text-red-500">{error}</p>}
+            {averageGrossApy !== null && (
+              <div className="mt-6">
+                <p className="text-xl text-center">{averageGrossApy.toFixed(4)}%</p>
+              </div>
+            )}
+          </div>
 
-        {/* Deuxième section : APY moyen de Kiln */}
-        <div className="bg-gray-900 p-6 rounded-lg shadow-lg w-full max-w-md mb-8">
-          <h2 className="text-2xl font-semibold mb-4 text-center">Kiln Validators Average APY</h2>
-          <KilnApyCalculator onSearch={handleSearchKilnApy} />
-          {loading && <p className="mt-4">Loading...</p>}
-          {error && <p className="mt-4 text-red-500">{error}</p>}
-          {kilnAverageApy !== null && (
-            <div className="mt-6">
-              <p className="text-xl text-center">{kilnAverageApy.toFixed(4)}%</p>
+          {/* Deuxième section : APY moyen de Kiln */}
+          <div className="bg-gray-900 p-6 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-semibold mb-4 text-center">Kiln Validators Average APY</h2>
+            <div className="flex justify-center">
+              <KilnApyCalculator onSearch={handleSearchKilnApy} />
             </div>
-          )}
+            {loading && <p className="mt-4">Loading...</p>}
+            {error && <p className="mt-4 text-red-500">{error}</p>}
+            {kilnAverageApy !== null && (
+              <div className="mt-6">
+                <p className="text-xl text-center">{kilnAverageApy.toFixed(4)}%</p>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Affichage de la différence entre les deux APY */}
         {averageGrossApy !== null && kilnAverageApy !== null && (
-          <div className="bg-gray-900 p-6 rounded-lg shadow-lg w-full max-w-md mb-8">
+          <div className="bg-gray-900 p-6 rounded-lg shadow-lg w-full max-w-md mx-auto mb-8">
             <h2 className="text-2xl font-semibold mb-4 text-center">APY Difference</h2>
             <p className="text-xl text-center">
               {(averageGrossApy - kilnAverageApy).toFixed(4)}%
@@ -165,18 +169,51 @@ export default function Home() {
           </div>
         )}
 
-        {/* Troisième section : ETH Rewards */}
-        <div className="bg-gray-900 p-6 rounded-lg shadow-lg w-full max-w-md">
-          <h2 className="text-2xl font-semibold mb-4">ETH Rewards</h2>
-          <DatePicker onDateChange={setDate} />
-          <Slider onValueChange={setEthAmount} />
+        {/* Section ETH Rewards avec les récompenses USD */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          {/* ETH Rewards Input */}
+          <div className="bg-gray-900 p-24 rounded-lg shadow-lg text-center">
+            <h2 className="text-2xl font-semibold mb-4">ETH Rewards</h2>
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="w-full p-2 rounded bg-gray-800 text-white mb-4"
+            />
+            <Slider onValueChange={setEthAmount} />
 
-          <button
-            onClick={handleSearchRewards}
-            className="mt-4 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition"
-          >
-            Search
-          </button>
+            <button
+              onClick={handleSearchRewards}
+              className="mt-4 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition"
+            >
+              Search
+            </button>
+          </div>
+
+          {/* USD Rewards Comparison */}
+          {(updatedKilnData.length > 0 || updatedNetworkData.length > 0) && (
+            <div className="bg-gray-900 p-6 rounded-lg shadow-lg">
+              <h2 className="text-2xl font-semibold mb-4">Rewards in USD</h2>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <span>Kiln:</span>
+                  <span className="font-semibold">${kilnRewardsUSD.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>Network:</span>
+                  <span className="font-semibold">${networkRewardsUSD.toFixed(2)}</span>
+                </div>
+                <div className="pt-2 border-t border-gray-700">
+                  <div className="flex justify-between items-center">
+                    <span>Difference:</span>
+                    <span className="font-semibold text-orange-500">
+                      ${(kilnRewardsUSD - networkRewardsUSD).toFixed(2)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Affichage du graphique */}
