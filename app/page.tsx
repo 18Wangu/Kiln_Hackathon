@@ -6,6 +6,7 @@ import WalletInput from "./components/WalletInput";
 import KilnApyCalculator from "./components/KilnApyCalculator"; // Nouveau composant
 import Slider from "./components/Slider";
 import Chart from "./components/Chart";
+import VaultBalance from "./components/VaultBalance";
 
 export default function Home() {
   // State pour la première recherche (APY moyen des validateurs)
@@ -170,10 +171,10 @@ export default function Home() {
         )}
 
         {/* Section ETH Rewards avec les récompenses USD */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {/* ETH Rewards Input */}
           <div className="bg-gray-900 p-24 rounded-lg shadow-lg text-center">
-            <h2 className="text-2xl font-semibold mb-4">ETH Rewards</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-center">ETH Rewards</h2>
             <input
               type="date"
               value={date}
@@ -214,6 +215,12 @@ export default function Home() {
               </div>
             </div>
           )}
+
+          {/* Vault Balance */}
+          <div className="bg-gray-900 p-6 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-semibold mb-4 text-center">Vault Balance</h2>
+            <VaultBalance />
+          </div>
         </div>
 
         {/* Affichage du graphique */}

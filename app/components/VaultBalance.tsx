@@ -49,10 +49,9 @@ declare global {
     }, []);
   
     return (
-      <div className="text-white p-4 bg-gray-900 rounded-lg shadow-lg">
-        <h2 className="text-xl font-bold text-orange-500">Vault Balance</h2>
+      <div className="text-white p-4 bg-gray-900 rounded-lg shadow-lg flex flex-col items-center">
         {account ? (
-          <p className="mt-2">Connected Wallet: {account}</p>
+          <p className="mt-2 text-center">Connected Wallet: {account}</p>
         ) : (
           <p className="mt-2 text-red-500">Not connected</p>
         )}
