@@ -7,7 +7,6 @@ import KilnApyCalculator from "./components/KilnApyCalculator"; // Nouveau compo
 import Slider from "./components/Slider";
 import Chart from "./components/Chart";
 import VaultBalance from "./components/VaultBalance";
-import KilnWidget from "./components/KilnWidget";
 
 export default function Home() {
   // State pour la première recherche (APY moyen des validateurs)
@@ -129,6 +128,16 @@ export default function Home() {
     <div className="min-h-screen bg-gray-800 text-white p-6">
       <div className="container mx-auto">
         <h1 className="text-3xl font-bold mb-6 text-center">Find the best place to stake your ETH</h1>
+        
+        {/* Bouton Stake with Kiln */}
+        <div className="flex justify-center mb-8">
+          <a 
+            href="/stake-with-kiln"
+            className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+          >
+            Stake with Kiln
+          </a>
+        </div>
 
         {/* Section du dashboard avec les APY côte à côte */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -234,11 +243,6 @@ export default function Home() {
               networkRewardsUSD={networkRewardsUSD}
             />
           )}
-        </div>
-
-        {/* Kiln Widget */}
-        <div className="mt-8 w-full">
-          <KilnWidget />
         </div>
       </div>
     </div>
