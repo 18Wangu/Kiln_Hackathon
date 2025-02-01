@@ -1,8 +1,18 @@
 "use client";
 import { useState } from "react";
 
-const Slider = () => {
+interface SliderProps {
+  onValueChange: (value: number) => void;
+}
+
+const Slider = ({ onValueChange }: SliderProps) => {
   const [value, setValue] = useState(1);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = Number(e.target.value);
+    setValue(newValue);
+    onValueChange(newValue);
+  };
 
   return (
     <div className="flex flex-col items-center">
@@ -11,7 +21,7 @@ const Slider = () => {
         min="1"
         max="1000"
         value={value}
-        onChange={(e) => setValue(Number(e.target.value))}
+        onChange={handleChange}
         className="w-full accent-orange-500"
       />
       <span className="text-orange-500 font-bold">{value} ETH</span>
