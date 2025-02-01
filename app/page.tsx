@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Slider from "./components/Slider";
 import DatePicker from "./components/DatePicker";
+import Chart from "./components/Chart";
 import { fetchRewards } from "./api/kiln/route";
 
 export default function Home() {
@@ -14,9 +15,8 @@ export default function Home() {
     setData(result);
   };
 
-  // Fonction pour calculer le montant total d'ETH cumulé
   const calculateTotalETH = () => {
-    let totalETH = ethAmount; // Montant initial d'ETH
+    let totalETH = ethAmount;
     return data.map((item) => {
       totalETH += totalETH * (item.gross_apy / 100 / 365);
       return { ...item, totalETH };
@@ -39,22 +39,11 @@ export default function Home() {
         >
           Search
         </button>
+      </div>
 
-        <div className="mt-6">
-          {updatedData.length > 0 ? (
-            updatedData.map((item, index) => (
-              <div key={index} className="bg-gray-800 p-4 rounded-lg mb-2">
-                <p className="text-lg">📅 Date: {item.date}</p>
-                <p className="text-lg">🔥 Gross APY: {item.gross_apy}%</p>
-                <p className="text-lg text-orange-400">
-                  💰 Total ETH: {item.totalETH.toFixed(8)}
-                </p>
-              </div>
-            ))
-          ) : (
-            <p className="text-gray-400">Aucune donnée disponible.</p>
-          )}
-        </div>
+      {/* Affichage du graphique */}
+      <div className="mt-6 w-full max-w-2xl">
+        {updatedData.length > 0 && <Chart data={updatedData} />}
       </div>
     </main>
   );
