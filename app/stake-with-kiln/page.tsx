@@ -1,6 +1,7 @@
 "use client";
 
 import KilnWidget from "../components/KilnWidget";
+import Link from 'next/link';
 
 export default function StakeWithKiln() {
   return (
@@ -15,12 +16,12 @@ export default function StakeWithKiln() {
         
         {/* Bouton de retour */}
         <div className="mt-6 flex justify-center">
-          <a 
+          <Link 
             href="/"
             className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-colors"
           >
-            Retour à l'accueil
-          </a>
+            Retour à l&apos;accueil
+          </Link>
         </div>
       </div>
     </div>
