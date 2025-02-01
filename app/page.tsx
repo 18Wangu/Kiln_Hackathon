@@ -3,7 +3,6 @@ import { useState } from "react";
 import Slider from "./components/Slider";
 import DatePicker from "./components/DatePicker";
 import Chart from "./components/Chart";
-import { fetchRewards } from "./api/kiln/route";
 
 export default function Home() {
   const [date, setDate] = useState("2025-01-28");
@@ -14,10 +13,11 @@ export default function Home() {
 
   const handleSearch = async () => {
     try {
-      const kilnResult = await fetchRewards(date, "kiln");
-      const networkResult = await fetchRewards(date, "network");
+      // Appel API pour récupérer les données de Kiln et Network
+      const kilnResult = await fetch(`/api/kiln?date=${date}&scope=kiln`).then((res) => res.json());
+      const networkResult = await fetch(`/api/kiln?date=${date}&scope=network`).then((res) => res.json());
 
-      // Appel de l'API ETH Price
+      // Appel API pour récupérer le prix de l'ETH
       const ethPriceResponse = await fetch('/api/eth-price');
       const ethPriceData = await ethPriceResponse.json();
       const ethPriceResult = ethPriceData.eth_price_usd;

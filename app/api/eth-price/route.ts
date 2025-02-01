@@ -1,3 +1,5 @@
+// api/eht-price/route.ts
+
 export async function GET() {
     const apiKey = "kiln_DBmNa8Y4Eu7O1ZCx9QMdTS4fQckBnWOEuwEqw9IM";
     const url = "https://api.kiln.fi/v1/eth/network-stats";
