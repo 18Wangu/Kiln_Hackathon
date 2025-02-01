@@ -15,6 +15,13 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Better Stake",
   description: "Find the best staking opportunities for your ETH",
+  icons: {
+    icon: [
+      {
+        url: '/logo.png',
+      }
+    ],
+  },
 };
 
 export default function RootLayout({
