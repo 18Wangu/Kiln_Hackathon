@@ -1,5 +1,3 @@
-// app/api/kiln/route.ts
-
 import { NextResponse } from 'next/server';
 
 type RewardEntry = {
@@ -23,8 +21,8 @@ const fetchRewards = async (date: string, scope: string): Promise<RewardEntry[]>
       date: entry.date,
       gross_apy: entry.gross_apy,
     }));
-  } catch (error) {
-    console.error("Erreur lors de la récupération des données", error);
+  } catch {
+    console.error("Erreur lors de la récupération des données");
     return [];
   }
 };
@@ -38,7 +36,7 @@ export async function GET(request: Request) {
   try {
     const rewards = await fetchRewards(date, scope);
     return NextResponse.json(rewards);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Erreur lors de la récupération des données" }, { status: 500 });
   }
 }
