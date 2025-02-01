@@ -1,7 +1,7 @@
 const KilnWidget = () => {
     return (
         <iframe
-          src="https://anger.widget.testnet.kiln.fi/earn"
+          src="https://nlik.widget.testnet.kiln.fi/earn"
           title="Kiln Widget"
           allow="clipboard-write"
           style={{ width:"100vw", height:"100vh"}}
