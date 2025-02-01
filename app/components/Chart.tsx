@@ -5,18 +5,26 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 interface ChartProps {
-  data: { date: string; totalETH: number }[];
+  kilnData: { date: string; totalETH: number }[];
+  networkData: { date: string; totalETH: number }[];
 }
 
-export default function Chart({ data }: ChartProps) {
+export default function Chart({ kilnData, networkData }: ChartProps) {
   const chartData = {
-    labels: data.map((item) => item.date),
+    labels: kilnData.map((item) => item.date),
     datasets: [
       {
-        label: "Total ETH",
-        data: data.map((item) => item.totalETH),
+        label: "Total ETH (Kiln)",
+        data: kilnData.map((item) => item.totalETH),
         borderColor: "orange",
         backgroundColor: "rgba(255, 165, 0, 0.5)",
+        tension: 0.4,
+      },
+      {
+        label: "Total ETH (Network)",
+        data: networkData.map((item) => item.totalETH),
+        borderColor: "gray",
+        backgroundColor: "rgba(128, 128, 128, 0.5)",
         tension: 0.4,
       },
     ],

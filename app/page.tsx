@@ -8,14 +8,17 @@ import { fetchRewards } from "./api/kiln/route";
 export default function Home() {
   const [date, setDate] = useState("2025-01-28");
   const [ethAmount, setEthAmount] = useState(1);
-  const [data, setData] = useState<{ date: string; gross_apy: number }[]>([]);
+  const [kilnData, setKilnData] = useState<{ date: string; gross_apy: number }[]>([]);
+  const [networkData, setNetworkData] = useState<{ date: string; gross_apy: number }[]>([]);
 
   const handleSearch = async () => {
-    const result = await fetchRewards(date);
-    setData(result);
+    const kilnResult = await fetchRewards(date, "kiln");
+    const networkResult = await fetchRewards(date, "network");
+    setKilnData(kilnResult);
+    setNetworkData(networkResult);
   };
 
-  const calculateTotalETH = () => {
+  const calculateTotalETH = (data: { date: string; gross_apy: number }[]) => {
     let totalETH = ethAmount;
     return data.map((item) => {
       totalETH += totalETH * (item.gross_apy / 100 / 365);
@@ -23,7 +26,8 @@ export default function Home() {
     });
   };
 
-  const updatedData = calculateTotalETH();
+  const updatedKilnData = calculateTotalETH(kilnData);
+  const updatedNetworkData = calculateTotalETH(networkData);
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-black text-white p-6">
@@ -43,7 +47,9 @@ export default function Home() {
 
       {/* Affichage du graphique */}
       <div className="mt-6 w-full max-w-2xl">
-        {updatedData.length > 0 && <Chart data={updatedData} />}
+        {(updatedKilnData.length > 0 || updatedNetworkData.length > 0) && (
+          <Chart kilnData={updatedKilnData} networkData={updatedNetworkData} />
+        )}
       </div>
     </main>
   );

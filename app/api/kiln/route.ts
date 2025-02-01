@@ -1,6 +1,6 @@
-export const fetchRewards = async (date: string) => {
+export const fetchRewards = async (date: string, scope: string) => {
   const apiKey = "kiln_DBmNa8Y4Eu7O1ZCx9QMdTS4fQckBnWOEuwEqw9IM";
-  const url = `https://api.kiln.fi/v1/eth/rewards?scope=kiln&start_date=${date}`;
+  const url = `https://api.kiln.fi/v1/eth/rewards?scope=${scope}&start_date=${date}`;
 
   try {
     const response = await fetch(url, {
