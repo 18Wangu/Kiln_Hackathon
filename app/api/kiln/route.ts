@@ -1,4 +1,9 @@
-export const fetchRewards = async (date: string, scope: string) => {
+type RewardEntry = {
+  date: string;
+  gross_apy: number;
+};
+
+export const fetchRewards = async (date: string, scope: string): Promise<RewardEntry[]> => {
   const apiKey = "kiln_DBmNa8Y4Eu7O1ZCx9QMdTS4fQckBnWOEuwEqw9IM";
   const url = `https://api.kiln.fi/v1/eth/rewards?scope=${scope}&start_date=${date}`;
 
@@ -10,7 +15,7 @@ export const fetchRewards = async (date: string, scope: string) => {
     });
     const data = await response.json();
 
-    return data.data.map((entry: any) => ({
+    return data.data.map((entry: RewardEntry) => ({
       date: entry.date,
       gross_apy: entry.gross_apy,
     }));
