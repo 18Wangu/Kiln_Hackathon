@@ -1,7 +1,9 @@
+// app/page.tsx
 "use client";
 
 import { useState } from "react";
 import WalletInput from "./components/WalletInput";
+import KilnApyCalculator from "./components/KilnApyCalculator"; // Nouveau composant
 import Slider from "./components/Slider";
 import DatePicker from "./components/DatePicker";
 import Chart from "./components/Chart";
@@ -18,6 +20,9 @@ export default function Home() {
   const [kilnData, setKilnData] = useState<{ date: string; gross_apy: number }[]>([]);
   const [networkData, setNetworkData] = useState<{ date: string; gross_apy: number }[]>([]);
   const [ethPrice, setEthPrice] = useState(0);
+
+  // Nouveau state pour l'APY moyen de Kiln
+  const [kilnAverageApy, setKilnAverageApy] = useState<number | null>(null);
 
   // Fonction pour gérer la première recherche (APY)
   const handleSearchApy = async (wallet: string, date: string) => {
@@ -37,6 +42,35 @@ export default function Home() {
         const totalApy = result.data.reduce((sum: number, item: { gross_apy: number }) => sum + item.gross_apy, 0);
         const averageApy = totalApy / result.data.length;
         setAverageGrossApy(averageApy);
+      } else {
+        setError("No data found for the selected period");
+      }
+    } catch (error: unknown) {
+      console.error('Error fetching data:', error);
+      setError("Failed to fetch data");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Nouvelle fonction pour gérer la recherche de l'APY moyen de Kiln
+  const handleSearchKilnApy = async (date: string) => {
+    setLoading(true);
+    setError(null);
+    setKilnAverageApy(null);
+
+    try {
+      const response = await fetch(`/api/kiln?date=${date}&scope=kiln`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const result = await response.json();
+
+      // Calcul de la moyenne des gross_apy
+      if (result.length > 0) {
+        const totalApy = result.reduce((sum: number, item: { gross_apy: number }) => sum + item.gross_apy, 0);
+        const averageApy = totalApy / result.length;
+        setKilnAverageApy(averageApy);
       } else {
         setError("No data found for the selected period");
       }
@@ -95,7 +129,7 @@ export default function Home() {
       <div className="container mx-auto">
         <h1 className="text-3xl font-bold mb-6 text-center">Find the best place to stake your ETH</h1>
 
-        {/* Première section : APY moyen */}
+        {/* Première section : APY moyen du wallet */}
         <div className="bg-gray-900 p-6 rounded-lg shadow-lg w-full max-w-md mb-8">
           <h2 className="text-2xl font-semibold mb-4 text-center">Your Validator Average APY</h2>
           <WalletInput onSearch={handleSearchApy} />
@@ -108,7 +142,30 @@ export default function Home() {
           )}
         </div>
 
-        {/* Deuxième section : ETH Rewards */}
+        {/* Deuxième section : APY moyen de Kiln */}
+        <div className="bg-gray-900 p-6 rounded-lg shadow-lg w-full max-w-md mb-8">
+          <h2 className="text-2xl font-semibold mb-4 text-center">Kiln Validators Average APY</h2>
+          <KilnApyCalculator onSearch={handleSearchKilnApy} />
+          {loading && <p className="mt-4">Loading...</p>}
+          {error && <p className="mt-4 text-red-500">{error}</p>}
+          {kilnAverageApy !== null && (
+            <div className="mt-6">
+              <p className="text-xl text-center">{kilnAverageApy.toFixed(4)}%</p>
+            </div>
+          )}
+        </div>
+
+        {/* Affichage de la différence entre les deux APY */}
+        {averageGrossApy !== null && kilnAverageApy !== null && (
+          <div className="bg-gray-900 p-6 rounded-lg shadow-lg w-full max-w-md mb-8">
+            <h2 className="text-2xl font-semibold mb-4 text-center">APY Difference</h2>
+            <p className="text-xl text-center">
+              {(averageGrossApy - kilnAverageApy).toFixed(4)}%
+            </p>
+          </div>
+        )}
+
+        {/* Troisième section : ETH Rewards */}
         <div className="bg-gray-900 p-6 rounded-lg shadow-lg w-full max-w-md">
           <h2 className="text-2xl font-semibold mb-4">ETH Rewards</h2>
           <DatePicker onDateChange={setDate} />
