@@ -7,6 +7,7 @@ import KilnApyCalculator from "./components/KilnApyCalculator"; // Nouveau compo
 import Slider from "./components/Slider";
 import Chart from "./components/Chart";
 import VaultBalance from "./components/VaultBalance";
+import KilnWidget from "./components/KilnWidget";
 
 export default function Home() {
   // State pour la première recherche (APY moyen des validateurs)
@@ -233,6 +234,11 @@ export default function Home() {
               networkRewardsUSD={networkRewardsUSD}
             />
           )}
+        </div>
+
+        {/* Kiln Widget */}
+        <div className="mt-8 w-full">
+          <KilnWidget />
         </div>
       </div>
     </div>
