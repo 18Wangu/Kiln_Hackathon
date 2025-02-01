@@ -1,5 +1,8 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { ethers } from "ethers";
+
 // Define proper types for ethereum methods and callbacks
 declare global {
     interface Window {
@@ -10,11 +13,6 @@ declare global {
       };
     }
 }
-
-"use client";
-
-import { useState, useEffect } from "react";
-import { ethers } from "ethers";
 
 const VAULT_ADDRESS = "0xDea01Fc5289aF2c440Ca65582e3C44767C0fcf08";
 const ABI = [
