@@ -4,7 +4,6 @@ import Slider from "./components/Slider";
 import DatePicker from "./components/DatePicker";
 import Chart from "./components/Chart";
 import { fetchRewards } from "./api/kiln/route";
-import { fetchEthPrice } from "./api/eth-price/route";
 
 export default function Home() {
   const [date, setDate] = useState("2025-01-28");
@@ -14,13 +13,21 @@ export default function Home() {
   const [ethPrice, setEthPrice] = useState(0);
 
   const handleSearch = async () => {
-    const kilnResult = await fetchRewards(date, "kiln");
-    const networkResult = await fetchRewards(date, "network");
-    const ethPriceResult = await fetchEthPrice();
+    try {
+      const kilnResult = await fetchRewards(date, "kiln");
+      const networkResult = await fetchRewards(date, "network");
 
-    setKilnData(kilnResult);
-    setNetworkData(networkResult);
-    setEthPrice(ethPriceResult);
+      // Appel de l'API ETH Price
+      const ethPriceResponse = await fetch('/api/eth-price');
+      const ethPriceData = await ethPriceResponse.json();
+      const ethPriceResult = ethPriceData.eth_price_usd;
+
+      setKilnData(kilnResult);
+      setNetworkData(networkResult);
+      setEthPrice(ethPriceResult);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des données", error);
+    }
   };
 
   const calculateTotalETH = (data: { date: string; gross_apy: number }[]) => {
