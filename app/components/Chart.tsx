@@ -7,9 +7,11 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 interface ChartProps {
   kilnData: { date: string; totalETH: number }[];
   networkData: { date: string; totalETH: number }[];
+  kilnRewardsUSD: number;
+  networkRewardsUSD: number;
 }
 
-export default function Chart({ kilnData, networkData }: ChartProps) {
+export default function Chart({ kilnData, networkData, kilnRewardsUSD, networkRewardsUSD }: ChartProps) {
   const chartData = {
     labels: kilnData.map((item) => item.date),
     datasets: [
@@ -32,7 +34,9 @@ export default function Chart({ kilnData, networkData }: ChartProps) {
 
   return (
     <div className="bg-gray-900 p-4 rounded-lg w-full">
-      <h2 className="text-xl text-white mb-2">📈 Évolution du Total ETH</h2>
+      <h2 className="text-xl text-white mb-2">
+        📈 Rewards en USD : <strong className="text-orange-500">Kiln</strong> (${kilnRewardsUSD.toFixed(2)}) vs Network (${networkRewardsUSD.toFixed(2)})
+      </h2>
       <Line data={chartData} />
     </div>
   );
