@@ -34,13 +34,14 @@ export default function Home() {
 
       // Calcul de la moyenne des gross_apy
       if (result.data && result.data.length > 0) {
-        const totalApy = result.data.reduce((sum: number, item: any) => sum + item.gross_apy, 0);
+        const totalApy = result.data.reduce((sum: number, item: { gross_apy: number }) => sum + item.gross_apy, 0);
         const averageApy = totalApy / result.data.length;
         setAverageGrossApy(averageApy);
       } else {
         setError("No data found for the selected period");
       }
-    } catch (err) {
+    } catch (error: unknown) {
+      console.error('Error fetching data:', error);
       setError("Failed to fetch data");
     } finally {
       setLoading(false);
