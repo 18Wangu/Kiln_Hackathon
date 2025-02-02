@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Better Stake
 
-## Getting Started
+**Un dashboard pour comparer les meilleurs endroits où staker vos cryptos.**  
 
-First, run the development server:
+🔍 Avec **Better Stake**, vous pouvez analyser la **véritable performance** de n'importe quel validateur sur différentes périodes :  
+📊 **10 derniers jours, 6 derniers mois, l'année passée**, etc.  
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Plus besoin de croire aux **APY marketing trompeurs** ! **Better Stake** vous donne accès aux **données on-chain réelles** et vous permet de :  
+✅ **Comparer les rewards** entre différents validateurs  
+✅ **Visualiser les gains potentiels** avec des **graphiques interactifs**  
+✅ **Analyser la performance de votre validateur actuel** en collant son adresse  
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🔗 Actuellement disponible pour :  
+- 🟣 **Ethereum**  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+⚡ **À venir** : **Solana, Cosmos et d'autres blockchains**  
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠 Testez-le dès maintenant !  
+Le site est **déployé sur Vercel**, alors n'hésitez pas à l'essayer et à optimiser votre staking ! 🚀  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+👉 **[Lien vers Better Stake](#)** (remplace avec l'URL réelle)  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+💡 **Contribuer ?** N'hésitez pas à proposer des améliorations ou signaler des bugs !  
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+🔥 **Maximisez vos gains, stakez intelligemment avec Better Stake !** 🔥
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
