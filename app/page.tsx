@@ -233,6 +233,17 @@ export default function Home() {
           </div>
         </div>
 
+        <div className="bg-gray-900 p-6 rounded-lg shadow-lg mb-8 md:col-span-3 md:mt-0">
+          <h2 className="text-2xl font-semibold mb-4 text-center">Mint Your Tokenized Validator</h2>
+          <div className="flex justify-center">
+            <button
+              className="mt-4 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition"
+            >
+              Mint vNFT
+            </button>
+          </div>
+        </div>
+
         {/* Affichage du graphique */}
         <div className="mt-6 w-full max-w-2xl">
           {(updatedKilnData.length > 0 || updatedNetworkData.length > 0) && (
