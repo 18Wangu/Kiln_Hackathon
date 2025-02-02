@@ -22,9 +22,7 @@ Plus besoin de croire aux **APY marketing trompeurs** ! **Better Stake** vous do
 ## 🛠 Testez-le dès maintenant !  
 Le site est **déployé sur Vercel**, alors n'hésitez pas à l'essayer et à optimiser votre staking ! 🚀  
 
-👉 **[Lien vers Better Stake](#)** (remplace avec l'URL réelle)  
-
-💡 **Contribuer ?** N'hésitez pas à proposer des améliorations ou signaler des bugs !  
+👉 **[kiln-hackathon.vercel.app](#)**
 
 ---
 
